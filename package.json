@@ -1,6 +1,6 @@
 {
   "name": "babelify-jest",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "repository": "pnuzhdin/babelify-jest",
   "dependencies": {
     "babel-core": "^6.23.1"
