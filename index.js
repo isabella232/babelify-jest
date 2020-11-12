@@ -34,7 +34,7 @@ module.exports = {
               }
             } catch (e) {
               // yarn puts scoped dependencies in their own directory (i.e. @babel) and do not have a package.json at their root
-              return false;
+              return true;
             }
             return false;
         };
