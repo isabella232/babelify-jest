@@ -21,15 +21,20 @@ module.exports = {
 
         var isBabelifyModule = function(filename) {
             var lastModulePath = getLastModulePath(filename);
-            var packageJson = JSON.parse(fs.readFileSync(lastModulePath + "/package.json", "utf8"));
-            if (packageJson.browserify && packageJson.browserify.transform) {
-                var transformArray = packageJson.browserify.transform;
-                for (var t = 0; t < transformArray.length; ++t) {
-                    var transform = transformArray[t];
-                    if (transform === "babelify" || Array.isArray(transform) && transform[0] === "babelify") {
-                        return true;
-                    }
-                }
+            try {
+              var packageJson = JSON.parse(fs.readFileSync(lastModulePath + "/package.json", "utf8"));
+              if (packageJson.browserify && packageJson.browserify.transform) {
+                  var transformArray = packageJson.browserify.transform;
+                  for (var t = 0; t < transformArray.length; ++t) {
+                      var transform = transformArray[t];
+                      if (transform === "babelify" || Array.isArray(transform) && transform[0] === "babelify") {
+                          return true;
+                      }
+                  }
+              }
+            } catch (e) {
+              // yarn puts scoped dependencies in their own directory (i.e. @babel) and do not have a package.json at their root
+              return false;
             }
             return false;
         };
